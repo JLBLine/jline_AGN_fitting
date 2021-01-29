@@ -64,7 +64,7 @@ def plot_spectra(wavelengths, spectra, smoothed=False):
     Parameters
     ----------
     wavelengths : numpy array
-        Array containing wavelengths to plot (Angstroms)
+        Array containing wavelengths to plot (:math:`\\mathring{\\mathrm{A}}`)
     spectra : numpy array
         Array containing flux densities :math:`(\\mathrm{erg}\\,\\mathrm{s}^{-1}\\,\\mathrm{cm}^{-2}\\,\\mathring{\\mathrm{A}}^{-1})`
     smoothed : numpy array
@@ -106,17 +106,17 @@ def spectra_subset(wavelengths, spectra, width=250, line_cent=False,
     Parameters
     ----------
     wavelengths : numpy array
-        Array containing wavelengths to plot (:math:\\mathring{\\mathrm{A}})
+        Array containing wavelengths to plot (:math:`\\mathring{\\mathrm{A}}`)
     spectra : numpy array
         Array containing flux densities :math:`(\\mathrm{erg}\\,\\mathrm{s}^{-1}\\,\\mathrm{cm}^{-2}\\,\\mathring{\\mathrm{A}}^{-1})`
     width : float
-        Width about `line_cent` to crop the spectra to (:math:\\mathring{\\mathrm{A}})
+        Width about `line_cent` to crop the spectra to (:math:`\\mathring{\\mathrm{A}}`)
     line_cent : float
-        Central wavelength (:math:\\mathring{\\mathrm{A}}) to crop about
+        Central wavelength (:math:`\\mathring{\\mathrm{A}}`) to crop about
     lower_wave: float
-        Alternatively, specify a lower wavelength bound to crop to (:math:\\mathring{\\mathrm{A}})
+        Alternatively, specify a lower wavelength bound to crop to (:math:`\\mathring{\\mathrm{A}}`)
     upper_wave: float
-        Alternatively, specify an upper wavelength bound to crop to (:math:\\mathring{\\mathrm{A}})
+        Alternatively, specify an upper wavelength bound to crop to (:math:`\\mathring{\\mathrm{A}}`)
 
     Returns
     -------
@@ -156,15 +156,15 @@ def do_lmfit(lm_model, trim_wavelengths, trim_spectra, line_cent):
     lm_model : `lmfit.model`
         The lmfit model to be used in fitting
     trim_wavelengths : numpy array
-        Array containing wavelengths to fit (:math:\\mathring{\\mathrm{A}})
+        Array containing wavelengths to fit (:math:`\\mathring{\\mathrm{A}}`)
     trim_spectra : numpy array
         Array containing flux densities to fit :math:`(\\mathrm{erg}\\,\\mathrm{s}^{-1}\\,\\mathrm{cm}^{-2}\\,\\mathring{\\mathrm{A}}^{-1})`
     line_cent : float
-        Central wavelength (:math:\\mathring{\\mathrm{A}}) to fit about
+        Central wavelength (:math:`\\mathring{\\mathrm{A}}`) to fit about
     lower_wave: float
-        Alternatively, specify a lower wavelength bound to crop to (:math:\\mathring{\\mathrm{A}})
+        Alternatively, specify a lower wavelength bound to crop to (:math:`\\mathring{\\mathrm{A}}`)
     upper_wave: float
-        Alternatively, specify an upper wavelength bound to crop to (:math:\\mathring{\\mathrm{A}})
+        Alternatively, specify an upper wavelength bound to crop to (:math:`\\mathring{\\mathrm{A}}`)
 
     Returns
     -------
@@ -197,11 +197,11 @@ def do_fit_plot(rest_wavelengths, spectra, trim_wavelengths, trim_spectra, fit):
     Parameters
     ==========
     rest_wavelengths : numpy array
-        Array containing all avaible wavelengths (:math:\\mathring{\\mathrm{A}})
+        Array containing all avaible wavelengths (:math:`\\mathring{\\mathrm{A}}`)
     spectra : numpy array
         Array containing all avaiable flux densities :math:`(\\mathrm{erg}\\,\\mathrm{s}^{-1}\\,\\mathrm{cm}^{-2}\\,\\mathring{\\mathrm{A}}^{-1})`
     trim_wavelengths : numpy array
-        Array containing wavelengths used for fit (:math:\\mathring{\\mathrm{A}})
+        Array containing wavelengths used for fit (:math:`\\mathring{\\mathrm{A}}`)
     trim_spectra : numpy array
         Array containing flux densities used for fit :math:`(\\mathrm{erg}\\,\\mathrm{s}^{-1}\\,\\mathrm{cm}^{-2}\\,\\mathring{\\mathrm{A}}^{-1})`
     fit : `lmfit.model.ModelResult`
