@@ -98,10 +98,34 @@ def spectra_subset(wavelengths, spectra, width=250, line_cent=False,
                    lower_wave=False, upper_wave=False):
     """Takes the given spectra and wavelengths (in
     angstrom) and crops. If line_cent is provided, crop about line_cent
-    to the given width (defaults to 2000 Angstrom). Alternatively,
+    to the given width (defaults to 250 Angstrom). Alternatively,
     can manually specifiy a lower wavelength bounary (lower_wave)
     and upper wavelength bounary (upper_wave). lower_wave and upper_wave
-    will overwrite any limits set via line_cent and width."""
+    will overwrite any limits set via line_cent and width.
+
+    Parameters
+    ----------
+    wavelengths : numpy array
+        Array containing wavelengths to plot (:math:\\mathring{\\mathrm{A}})
+    spectra : numpy array
+        Array containing flux densities :math:`(\\mathrm{erg}\\,\\mathrm{s}^{-1}\\,\\mathrm{cm}^{-2}\\,\\mathring{\\mathrm{A}}^{-1})`
+    width : float
+        Width about `line_cent` to crop the spectra to (:math:\\mathring{\\mathrm{A}})
+    line_cent : float
+        Central wavelength (:math:\\mathring{\\mathrm{A}}) to crop about
+    lower_wave: float
+        Alternatively, specify a lower wavelength bound to crop to (:math:\\mathring{\\mathrm{A}})
+    upper_wave: float
+        Alternatively, specify an upper wavelength bound to crop to (:math:\\mathring{\\mathrm{A}})
+
+    Returns
+    -------
+    spectra[indexes] : numpy array
+        A cropped subset of `spectra`
+    wavelengths[indexes] : numpy array
+        A cropped subset of `wavelengths`
+
+    """
 
     ##Exit if reasonable combo of arguements not given
     if not line_cent and not lower_wave and not upper_wave:
@@ -124,8 +148,29 @@ def spectra_subset(wavelengths, spectra, width=250, line_cent=False,
     return spectra[indexes], wavelengths[indexes]
 
 def do_lmfit(lm_model, trim_wavelengths, trim_spectra, line_cent):
-    """Takes an lmfit.models instance (lm_model) and fits a spectra
-    as described by trim_spectra, trim_wavelenghts."""
+    """Takes an lmfit.models instance `lm_model` and fits an emission line
+    centred at `line_cent`, as described by `trim_spectra`, `trim_wavelenghts`
+
+    Parameters
+    ----------
+    lm_model : `lmfit.model`
+        The lmfit model to be used in fitting
+    trim_wavelengths : numpy array
+        Array containing wavelengths to fit (:math:\\mathring{\\mathrm{A}})
+    trim_spectra : numpy array
+        Array containing flux densities to fit :math:`(\\mathrm{erg}\\,\\mathrm{s}^{-1}\\,\\mathrm{cm}^{-2}\\,\\mathring{\\mathrm{A}}^{-1})`
+    line_cent : float
+        Central wavelength (:math:\\mathring{\\mathrm{A}}) to fit about
+    lower_wave: float
+        Alternatively, specify a lower wavelength bound to crop to (:math:\\mathring{\\mathrm{A}})
+    upper_wave: float
+        Alternatively, specify an upper wavelength bound to crop to (:math:\\mathring{\\mathrm{A}})
+
+    Returns
+    -------
+    fit : `lmfit.model.ModelResult`
+        The results of the `lmfit` fitting
+    """
 
     ##You can combine lmfit models just by adding them like this:
     emiss_and_power_model = lm_model(prefix='emission_') + PowerLawModel(prefix='power_')
@@ -139,12 +184,32 @@ def do_lmfit(lm_model, trim_wavelengths, trim_spectra, line_cent):
     ##Do the fit
     fit = emiss_and_power_model.fit(trim_spectra, emiss_and_power_params, x=trim_wavelengths)
 
+    print(type(lm_model),type(fit))
+
     return fit
 
 def do_fit_plot(rest_wavelengths, spectra, trim_wavelengths, trim_spectra, fit):
-    """Plots the given input spectra (wavelengths, spectra) the subset of data
-    that was used for fitting (trim_wavelenghts, trim_spectra), and the fit
-    result out of lmfit (fit)"""
+    """Plots the given input spectra (`rest_wavelengths`, `spectra`) the subset
+    of data that was used for fitting (`trim_wavelenghts, `trim_spectra`), and
+    the fit result out of lmfit using `fit`. Saves the figure as
+    'fit_results.png'.
+
+    Parameters
+    ==========
+    rest_wavelengths : numpy array
+        Array containing all avaible wavelengths (:math:\\mathring{\\mathrm{A}})
+    spectra : numpy array
+        Array containing all avaiable flux densities :math:`(\\mathrm{erg}\\,\\mathrm{s}^{-1}\\,\\mathrm{cm}^{-2}\\,\\mathring{\\mathrm{A}}^{-1})`
+    trim_wavelengths : numpy array
+        Array containing wavelengths used for fit (:math:\\mathring{\\mathrm{A}})
+    trim_spectra : numpy array
+        Array containing flux densities used for fit :math:`(\\mathrm{erg}\\,\\mathrm{s}^{-1}\\,\\mathrm{cm}^{-2}\\,\\mathring{\\mathrm{A}}^{-1})`
+    fit : `lmfit.model.ModelResult`
+        The results of the `lmfit` fitting
+
+    Returns
+    =======
+    """
 
     ##Plot em up
     fig, axs = plt.subplots(1,2,figsize=(12,4))
